@@ -1,0 +1,139 @@
+@import './tokens.css';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-family);
+  font-size: 16px;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* Typography Defaults */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+  line-height: 1.25;
+}
+
+h3 {
+  font-size: 1.25rem;
+  line-height: 1.35;
+}
+
+p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Accessible Keyboard Focus */
+:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* Tabular Numerals for Prices & Dates */
+.tabular-nums, .price-display, .metric-value, .time-tag {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--brand-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-800);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-700);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print Stylesheet for Reports */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #111116 !important;
+  }
+
+  .no-print, header, nav, .role-switcher-banner, .btn-print, .sidebar {
+    display: none !important;
+  }
+
+  .printable-report {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .printable-report table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  .printable-report th, .printable-report td {
+    border: 1px solid #ccc !important;
+    color: #000 !important;
+    padding: 8px !important;
+  }
+}

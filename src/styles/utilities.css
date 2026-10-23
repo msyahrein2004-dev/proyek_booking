@@ -1,0 +1,97 @@
+/* Utilities & Layout Helpers */
+
+.container {
+  width: 100%;
+  max-width: var(--max-width-content);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: var(--space-8);
+    padding-right: var(--space-8);
+  }
+}
+
+/* Flex & Grid utilities */
+.flex { display: flex; }
+.flex-col { display: flex; flex-direction: column; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.justify-end { justify-content: flex-end; }
+.gap-1 { gap: var(--space-1); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-6 { gap: var(--space-6); }
+.gap-8 { gap: var(--space-8); }
+.flex-1 { flex: 1 1 0%; }
+.flex-wrap { flex-wrap: wrap; }
+
+.grid { display: grid; }
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+
+@media (min-width: 640px) {
+  .sm-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+  .lg-grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lg-grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* Surface Cards */
+.card-surface {
+  background-color: var(--surface-dark);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card-surface:hover {
+  border-color: var(--gray-700);
+}
+
+.card-raised {
+  background-color: var(--surface-raised);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+}
+
+/* Text & Accent Highlights */
+.text-gold { color: var(--brand-gold); }
+.text-purple { color: var(--brand-purple-light); }
+.text-red { color: var(--brand-red); }
+.text-muted { color: var(--text-muted); }
+.text-secondary { color: var(--text-secondary); }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+
+/* Subtle Gold & Purple Accents */
+.badge-gold {
+  background: rgba(217, 182, 111, 0.12);
+  color: var(--brand-gold);
+  border: 1px solid rgba(217, 182, 111, 0.3);
+}
+
+.glow-purple {
+  box-shadow: 0 0 20px var(--brand-purple-glow);
+}
+
+.glow-gold {
+  box-shadow: 0 0 20px var(--brand-gold-glow);
+}
