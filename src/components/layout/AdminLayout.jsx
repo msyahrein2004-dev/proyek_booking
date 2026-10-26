@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
+import { useApp } from '../../context/AppContext';
 import { RoleSwitcher } from './RoleSwitcher';
 import { ToastContainer } from '../feedback/Toast';
 import {
@@ -14,12 +15,21 @@ import {
   Crown,
   Menu,
   X,
-  ExternalLink
+  ExternalLink,
+  LogOut,
+  ShieldCheck
 } from 'lucide-react';
 
 export const AdminLayout = () => {
+  const { adminAuth, logoutAdmin } = useApp();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logoutAdmin();
+    navigate('/admin/login', { replace: true });
+  };
 
   const adminNav = [
     { label: 'Ringkasan Dashboard', path: '/admin', icon: LayoutDashboard },
@@ -145,8 +155,64 @@ export const AdminLayout = () => {
             })}
           </nav>
 
-          {/* Bottom Link to Public Web */}
-          <div style={{ padding: 'var(--space-4)', borderTop: '1px solid var(--gray-800)' }}>
+          {/* Bottom Sidebar Info & Logout */}
+          <div style={{ padding: 'var(--space-4)', borderTop: '1px solid var(--gray-800)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '8px 10px',
+                borderRadius: '8px',
+                backgroundColor: 'rgba(217, 182, 111, 0.08)',
+                border: '1px solid rgba(217, 182, 111, 0.2)'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div
+                  style={{
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '50%',
+                    backgroundColor: 'var(--brand-purple)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--brand-gold)',
+                    fontWeight: '800',
+                    fontSize: '0.8rem'
+                  }}
+                >
+                  M
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--white)' }}>
+                    {adminAuth?.user || 'mauldi'}
+                  </div>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--brand-gold)', fontWeight: '600' }}>
+                    Super Admin
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={handleLogout}
+                title="Keluar dari sesi Admin"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer',
+                  padding: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  borderRadius: '4px'
+                }}
+              >
+                <LogOut size={16} />
+              </button>
+            </div>
+
             <Link
               to="/"
               style={{
@@ -198,9 +264,14 @@ export const AdminLayout = () => {
               >
                 <Menu size={22} />
               </button>
-              <h2 style={{ fontSize: '1.1rem', fontWeight: '700' }}>
-                Portal Administrasi KINGZ
-              </h2>
+              <div>
+                <h2 style={{ fontSize: '1.05rem', fontWeight: '700' }}>
+                  Portal Administrasi KINGZ
+                </h2>
+                <span style={{ fontSize: '0.72rem', color: 'var(--brand-gold)' }}>
+                  Akses Terautentikasi: {adminAuth?.user || 'mauldi'}
+                </span>
+              </div>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -221,6 +292,26 @@ export const AdminLayout = () => {
                 <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#4ADE80' }} />
                 Toko Buka (10.00 – 21.00)
               </span>
+
+              <button
+                onClick={handleLogout}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '5px 12px',
+                  borderRadius: 'var(--radius-sm)',
+                  backgroundColor: 'rgba(201, 52, 69, 0.12)',
+                  color: '#F87171',
+                  border: '1px solid rgba(201, 52, 69, 0.3)',
+                  fontSize: '0.78rem',
+                  fontWeight: '600',
+                  cursor: 'pointer'
+                }}
+              >
+                <LogOut size={14} />
+                <span>Logout</span>
+              </button>
             </div>
           </header>
 

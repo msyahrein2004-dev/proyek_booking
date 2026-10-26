@@ -21,10 +21,12 @@ export const LoginPage = () => {
   };
 
   const handleQuickLogin = (role, extraId = null) => {
-    switchRole(role, extraId);
     if (role === 'admin') {
-      navigate('/admin');
-    } else if (role === 'barber') {
+      navigate('/admin/login');
+      return;
+    }
+    switchRole(role, extraId);
+    if (role === 'barber') {
       navigate('/barber');
     } else {
       navigate('/my-bookings');
@@ -96,6 +98,7 @@ export const LoginPage = () => {
             <button
               type="button"
               onClick={() => handleQuickLogin('admin')}
+              title="Portal Admin membutuhkan login: user mauldi & pw 123"
               style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -112,7 +115,7 @@ export const LoginPage = () => {
               }}
             >
               <Shield size={16} />
-              <span>Admin</span>
+              <span>Admin 🔒</span>
             </button>
 
             <button

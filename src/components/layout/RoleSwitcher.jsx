@@ -1,17 +1,26 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { Shield, User, Scissors, RotateCcw } from 'lucide-react';
+import { Shield, User, Scissors, RotateCcw, Lock } from 'lucide-react';
 
 export const RoleSwitcher = () => {
-  const { currentRole, switchRole, barbers, currentBarber, resetStore } = useApp();
+  const { currentRole, switchRole, barbers, currentBarber, resetStore, adminAuth, showToast } = useApp();
   const navigate = useNavigate();
 
   const handleSelectRole = (newRole, extraId = null) => {
-    switchRole(newRole, extraId);
     if (newRole === 'admin') {
-      navigate('/admin');
-    } else if (newRole === 'barber') {
+      if (adminAuth?.isAuthenticated) {
+        switchRole('admin');
+        navigate('/admin');
+      } else {
+        showToast('Akses Admin dilindungi kata sandi. Silakan login (User: mauldi, PW: 123)', 'info');
+        navigate('/admin/login');
+      }
+      return;
+    }
+
+    switchRole(newRole, extraId);
+    if (newRole === 'barber') {
       navigate('/barber');
     } else {
       navigate('/');
@@ -82,6 +91,7 @@ export const RoleSwitcher = () => {
 
         <button
           onClick={() => handleSelectRole('admin')}
+          title={adminAuth?.isAuthenticated ? 'Sesi Admin Aktif (Mauldi)' : 'Perlu Login: mauldi / 123'}
           style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -96,8 +106,8 @@ export const RoleSwitcher = () => {
             cursor: 'pointer'
           }}
         >
-          <Shield size={12} />
-          <span>Admin</span>
+          {adminAuth?.isAuthenticated ? <Shield size={12} /> : <Lock size={12} color="var(--brand-gold)" />}
+          <span>{adminAuth?.isAuthenticated ? 'Admin (Mauldi)' : 'Admin (Login)'}</span>
         </button>
 
         {barbers.map((b) => (

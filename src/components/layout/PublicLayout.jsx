@@ -299,11 +299,11 @@ export const PublicLayout = () => {
                 Navigasi Cepat
               </h4>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.88rem' }}>
-                <li><Link to="/services" style={{ color: 'var(--text-secondary)' }}>Katalog Layanan & Tarif</Link></li>
+                <li><Link to="/services" style={{ color: 'var(--text-secondary)' }}>Katalog Layanan &amp; Tarif</Link></li>
                 <li><Link to="/barbers" style={{ color: 'var(--text-secondary)' }}>Profil Master Barber</Link></li>
                 <li><Link to="/booking" style={{ color: 'var(--text-secondary)' }}>Reservasi Online</Link></li>
                 <li><Link to="/my-bookings" style={{ color: 'var(--text-secondary)' }}>Cek Riwayat Booking</Link></li>
-                <li><Link to="/admin" style={{ color: 'var(--text-muted)' }}>Portal Admin Operasional</Link></li>
+                <li><Link to="/admin/login" style={{ color: 'var(--text-muted)' }}>Portal Khusus Admin (Login)</Link></li>
                 <li><Link to="/barber" style={{ color: 'var(--text-muted)' }}>Portal Antrean Barber</Link></li>
               </ul>
             </div>

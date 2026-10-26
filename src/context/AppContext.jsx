@@ -19,6 +19,51 @@ export const AppProvider = ({ children }) => {
   const [currentCustomerId, setCurrentCustomerId] = useState('cus-001');
   const [toasts, setToasts] = useState([]);
 
+  // Admin authentication state (User: mauldi, PW: 123)
+  const [adminAuth, setAdminAuth] = useState(() => {
+    try {
+      const stored = localStorage.getItem('kingz_admin_session');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed?.isAuthenticated && parsed?.user === 'mauldi') {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      // ignore
+    }
+    return { isAuthenticated: false, user: null };
+  });
+
+  const loginAdmin = (username, password) => {
+    if (username.trim().toLowerCase() === 'mauldi' && password === '123') {
+      const auth = { isAuthenticated: true, user: 'mauldi', loginTime: new Date().toISOString() };
+      setAdminAuth(auth);
+      try {
+        localStorage.setItem('kingz_admin_session', JSON.stringify(auth));
+      } catch (e) {}
+      setCurrentRole('admin');
+      showToast('Login berhasil! Selamat datang Admin Mauldi.', 'success');
+      return { success: true };
+    } else {
+      showToast('Autentikasi gagal! Username atau password salah.', 'error');
+      return {
+        success: false,
+        error: 'Username atau kata sandi salah. Gunakan user "mauldi" & kata sandi "123".'
+      };
+    }
+  };
+
+  const logoutAdmin = () => {
+    const emptyAuth = { isAuthenticated: false, user: null };
+    setAdminAuth(emptyAuth);
+    try {
+      localStorage.removeItem('kingz_admin_session');
+    } catch (e) {}
+    setCurrentRole('customer');
+    showToast('Admin berhasil logout dari sesi.', 'info');
+  };
+
   // Sync to state whenever data changes
   const refreshData = () => {
     setData(getStoredData());
@@ -175,6 +220,9 @@ export const AppProvider = ({ children }) => {
         bookings: data.bookings,
         settings: data.settings,
         currentRole,
+        adminAuth,
+        loginAdmin,
+        logoutAdmin,
         currentCustomer,
         currentBarber,
         switchRole,

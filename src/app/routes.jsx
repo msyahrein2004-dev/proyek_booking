@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { PublicLayout } from '../components/layout/PublicLayout';
 import { AdminLayout } from '../components/layout/AdminLayout';
 import { BarberLayout } from '../components/layout/BarberLayout';
+import { AdminGuard } from '../components/layout/AdminGuard';
 
 // Public & Customer Pages
 import { HomePage } from '../features/public/HomePage';
@@ -18,6 +19,7 @@ import { MyBookingsPage } from '../features/customer/MyBookingsPage';
 import { ProfilePage } from '../features/customer/ProfilePage';
 
 // Admin Pages
+import { AdminLoginPage } from '../features/admin/AdminLoginPage';
 import { AdminDashboardPage } from '../features/admin/AdminDashboardPage';
 import { AdminBookingsPage } from '../features/admin/AdminBookingsPage';
 import { AdminServicesPage } from '../features/admin/AdminServicesPage';
@@ -47,8 +49,18 @@ export const AppRoutes = () => {
         <Route path="/profile" element={<ProfilePage />} />
       </Route>
 
-      {/* Admin Routes under AdminLayout */}
-      <Route path="/admin" element={<AdminLayout />}>
+      {/* Admin Login Route (Publicly accessible login for staff) */}
+      <Route path="/admin/login" element={<AdminLoginPage />} />
+
+      {/* Protected Admin Routes under AdminLayout with AdminGuard */}
+      <Route
+        path="/admin"
+        element={
+          <AdminGuard>
+            <AdminLayout />
+          </AdminGuard>
+        }
+      >
         <Route index element={<AdminDashboardPage />} />
         <Route path="bookings" element={<AdminBookingsPage />} />
         <Route path="services" element={<AdminServicesPage />} />
